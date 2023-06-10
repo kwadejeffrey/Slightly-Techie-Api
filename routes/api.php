@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\V1\LoginController;
+use App\Http\Controllers\Auth\V1\LogoutController;
 use App\Http\Controllers\Auth\V1\RegisterController;
 use App\Http\Controllers\Post\V1\PostController;
 use Illuminate\Http\Request;
@@ -31,4 +32,5 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function(){
     Route::get('/post/{post}', [PostController::class, 'show']);
     Route::put('/updatepost/{post}', [PostController::class, 'update']);
     Route::delete('/deletepost/{post}', [PostController::class, 'delete']);
+    Route::post('/logout', [LogoutController::class, 'logouts']);
 });

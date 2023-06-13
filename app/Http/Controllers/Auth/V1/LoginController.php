@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     //
+    /**
+     * Function to create user token
+     * 
+     * @bodyParam email string required 
+     * @bodyParam password string required 
+     * 
+     * @return JsonResponse
+     */
     public function login(LoginRequest $request)
     {
         $data = [
@@ -31,7 +39,5 @@ class LoginController extends Controller
                 "Failed" => "Login failed"
             ]);
         }
-        // dd(auth()->user());
-        // 1|QZHc0pFc62bf1WVcubEQapf3vTthfQV14Jbblzbm
     }
 }

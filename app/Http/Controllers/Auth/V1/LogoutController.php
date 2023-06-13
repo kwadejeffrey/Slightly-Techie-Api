@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class LogoutController extends Controller
 {
     //
+    /**
+     * Function to invalidate user token(s)
+     * 
+     * @return JsonResponse
+     */
     public function logouts(Request $request)
     {
          

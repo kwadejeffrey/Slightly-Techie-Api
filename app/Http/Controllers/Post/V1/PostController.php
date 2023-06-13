@@ -13,15 +13,28 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     //
+    /**
+     * Get all post
+     * @apiResourceModel App\Models\Post
+     * @apiResource App\Http\Resources\V1\PostResource
+     * 
+     * @return PostResource
+     */
     public function index()
     {
-        $post = Post::query()->latest()->get();
+        
         return PostResource::collection(Post::query()->latest()->get());
-        // return new JsonResponse([
-        //     "posts" => Post::all()
-        // ]);
+       
     }
 
+    /**
+     * Create new blog post
+     * 
+     * @apiResource App\Http\Resources\V1\PostResource
+     * @apiResourceModel App\Models\Post
+     * 
+     * @return PostResource
+     */
     public function store(StorePostRequest $request)
     {
         $data = [
@@ -38,11 +51,26 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
+    /**
+     * Display blog post
+     * 
+     * @apiResource App\Http\Resources\V1\PostResource
+     * @apiResourceModel App\Http\Models\Post
+     */
     public function show(Post $post)
     {
         return new PostResource($post);
     }
 
+    /**
+     * Fetch blog post belonging to user
+     * 
+     * @apiResource App\Http\Resources\V1\PostResource
+     * 
+     * @apiResourceModel App\Http\Models\Post
+     * 
+     * @return PostResource
+     */
     public function myPosts()
     {
         $post = Post::query()->latest()->where('user_id',auth()->id())->get();
@@ -50,6 +78,20 @@ class PostController extends Controller
         return PostResource::collection($post);
     }
 
+
+    /**
+     * Update blog post
+     * 
+     * @bodyParam title string required
+     * @bodyParam sub_heading string required
+     * @bodyParam blog string required
+     * @bodyParam user_id int required
+     * 
+     * @apiResourceModel App\Http\Models\Post
+     * @apiResource App\Http\Resources\V1\PostResource
+     * 
+     * @return PostResource
+     */
     public function update(Post $post, Request $request)
     {
         // dd($post);
@@ -70,6 +112,13 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
+    /**
+     * Delete blog post
+     * 
+     * @apiResourceModel App\Http\Models\Post
+     * 
+     * @return JsonResponse
+     */
     public function delete(Post $post)
     {
         if($post->user_id === auth()->id()){
